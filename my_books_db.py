@@ -9,7 +9,7 @@ def get_known_sellers_list(sellersColumn):
 
 def get_data():
     booksData = []
-    with open(books_db_path) as book_details_file:
+    with open(books_db_path,encoding="utf-8") as book_details_file:
         data = csv.reader(book_details_file)
         for row in data:
             bookData = {"basic_search_text":row[0],"full_book_name":row[1],"known_sellers":get_known_sellers_list(row[2])}
