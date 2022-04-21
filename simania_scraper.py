@@ -56,9 +56,14 @@ def getUnkownSellers(all_sellers_data,known_sellers):
             unknown_sellers.append(seller)
     return unknown_sellers
 
-def get_unknown_sellers_for_book(basic_search_text,full_book_name,known_sellers):
+def get_unknown_sellers_for_book(basic_search_text,full_book_name,known_sellers,isLinux=False):
     
-    driver_path = "chromedriver.exe"
+    win_driver_path = "chromedriver.exe"
+    unix_driver_path = "chromedriver"
+    if(isLinux):
+        driver_path =unix_driver_path
+    else:
+       driver_path = win_driver_path 
     driver = webdriver.Chrome(executable_path=driver_path);
 
     driver.get("https://simania.co.il/")
