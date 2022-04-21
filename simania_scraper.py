@@ -62,10 +62,14 @@ def get_unknown_sellers_for_book(basic_search_text,full_book_name,known_sellers,
     unix_driver_path = "chromedriver"
     if(isLinux):
         driver_path =unix_driver_path
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-gpu")    
+        driver = webdriver.Chrome(executable_path=driver_path,chrome_options=chrome_options);    
     else:
-       driver_path = win_driver_path 
-    driver = webdriver.Chrome(executable_path=driver_path);
-
+        driver_path = win_driver_path 
+        driver = webdriver.Chrome(executable_path=driver_path);
+    
     driver.get("https://simania.co.il/")
 
     login(driver,"roy2289@gmail.com","22753737")
