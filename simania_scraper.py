@@ -48,6 +48,8 @@ def getUnkownSellers(all_sellers_data,known_sellers):
     for seller in all_sellers_data:
         seller_is_known = False
         for known_seller in known_sellers:
+            if(known_seller == ''):
+                continue
             if known_seller in seller["seller_name"]:
                 seller_is_known = True
         if not seller_is_known:

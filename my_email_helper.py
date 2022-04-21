@@ -1,4 +1,5 @@
 import smtplib;
+from email.mime.text import MIMEText
 
 def send_email(from_email,from_password,to_address,message,subject=""):
     
@@ -7,7 +8,7 @@ def send_email(from_email,from_password,to_address,message,subject=""):
     connection = smtplib.SMTP('smtp.gmail.com')
     connection.starttls()
     connection.login(user=from_email,password=from_password)
-    connection.sendmail(from_addr=from_email,to_addrs=to_address,msg=email_message)
+    connection.sendmail(from_addr=from_email,to_addrs=to_address,msg=email_message.encode(encoding='UTF-8'))
     connection.close()
 
 def send_email_from_me(to_address,message,subject=""):
