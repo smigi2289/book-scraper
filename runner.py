@@ -1,6 +1,8 @@
 from pydoc import text
 from unittest import skip
 from selenium import webdriver;
+import csv;
+import smtplib;
 
 def login(driver,user_text,password_text):
     login=driver.find_element_by_css_selector("#topTop > div:nth-child(5) > a:nth-child(1)");
@@ -56,10 +58,8 @@ def getUnkownSellers(all_sellers_data,known_sellers):
             unknown_sellers.append(seller)
     return unknown_sellers
 
-def get_known_sellers(book_name):
-    known_sellers = []
-    
-    known_sellers = ["דני בוק בת ים"]
+def get_known_sellers(sellersColumn):
+    known_sellers = sellersColumn.split('@')
     
     return known_sellers
 
@@ -86,5 +86,26 @@ def get_unknown_sellers_for_book(basic_search_text,full_book_name,known_sellers)
 
     driver.quit()
 
-get_unknown_sellers_for_book("אסימוב","כתבי אייזק אסימוב (כרך 1",get_known_sellers("כתבי אייזק אסימוב (כרך 1"))
-get_unknown_sellers_for_book("החבורה","החבורה - שישיית המפגשים-רומח הדרקון #6",get_known_sellers("החבורה - שישיית המפגשים-רומח הדרקון #6"))
+def get_unknown_sellers_by_file(file_path):
+    with open("book_details.csv") as book_details_file:
+        data = csv.reader(book_details_file)
+        for row in data:
+            get_unknown_sellers_for_book(row[0],row[1],get_known_sellers(row[2]))
+
+def send_email(from_email,from_password,to_address,message,subject=""):
+
+    email_message=f"Subject:{subject}\n\n{message}"
+    
+    connection = smtplib.SMTP('smtp.gmail.com')
+    connection.starttls()
+    connection.login(user=my_email,password=my_password)
+    connection.sendmail(from_addr=my_email,to_addrs=to_address,msg=email_message)
+    connection.close()
+
+my_email = "roymailingemail2289@gmail.com"
+my_password = "MailingEmail16842"
+to_address = "roy2289@gmail.com"
+send_email(my_email,my_password,to_address,"hello","awesome subject")
+#get_unknown_sellers_by_file("book_details.csv")
+
+
